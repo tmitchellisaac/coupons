@@ -5,6 +5,7 @@ In this application we created a fictitious e-commerce platform where merchants 
 - One additional feature would be to add an items index or a merchant’s index so users can view all items or merchants that are available on the site. 
 - Another useful feature addition could be to add more statistical information on items and merchants to help merchants make inventory decisions. For example, top selling items for the site, or most popular merchants. 
 
+
 #### The project contributors are as follows:
 Logan Finnegan:  (https://github.com/LoganFinnegan)
 Martin Chavez:  (https://github.com/Chavezgm)
