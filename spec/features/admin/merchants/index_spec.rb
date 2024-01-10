@@ -103,6 +103,18 @@ RSpec.describe 'Admin Merchants', type: :feature do
       expect(page).to have_button("enable")
       expect(page).to have_content("Status: Disabled")
     end
+
+    within "#merchant-#{@merch_1.id}" do
+    click_button("enable")
+    end
+
+    expect(current_path).to eq(admin_merchants_path)
+
+    within "#merchant-#{@merch_1.id}" do
+    expect(page).to have_button("disable")
+    expect(page).to have_content("Status: Enabled")
+  end
+    
   end
 
   # User 28
@@ -205,9 +217,4 @@ RSpec.describe 'Admin Merchants', type: :feature do
     expect(page).to have_content("Top selling date for GameStop was 10/31/05")
     expect(page).to have_content("Top selling date for Target was 02/02/22")
   end
-
-#   And I see a label “Top selling date for <merchant name> was <date with most sales>"
-
-# Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
-
 end
