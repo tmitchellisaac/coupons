@@ -1,14 +1,14 @@
 class Merchant < ApplicationRecord
   validates :name, presence: true
-  
+
   has_many :items, dependent: :destroy
   has_many :invoices, through: :items
   has_many :invoice_items, through: :items
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
-  
+
   enum status: { disabled: 0, enabled: 1 }
-  
+
   def transactions
     Transaction.joins(invoice: { invoice_items: :item }).where(items: { merchant_id: id })
   end
@@ -41,7 +41,7 @@ class Merchant < ApplicationRecord
     ORDER BY invoices.created_at;"]
   end
 
-  def top_earning_items
+  def top_earning_items #presentation
     #self.items.joins(invoices: :transactions).where("transactions.result = 1").group("items.id").select("SUM(invoice_items.quantity * invoice_items.unit_price) as total_revenue, items.*").order("total_revenue desc").limit(5)
     Item.find_by_sql(["SELECT items.*, SUM(invoice_items.quantity * invoice_items.unit_price) as total_revenue
     FROM

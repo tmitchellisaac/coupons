@@ -141,7 +141,7 @@ RSpec.describe "Merchants/Items Index Page", type: :feature do
     expect(page).to have_content("Item not created successfully")
   end
 
-  it "shows top 5 items that made the most money and shows the total amount made for each item" do
+  it "shows top 5 items that made the most money and shows the total amount made for each item" do #presentation
     merchant_1 = Merchant.create!(name: "Walmart")
     item1 = merchant_1.items.create!(name: "popcan", description: "fun", unit_price: 100)
     item2 = merchant_1.items.create!(name: "popper", description: "fun", unit_price: 156)
@@ -206,6 +206,12 @@ RSpec.describe "Merchants/Items Index Page", type: :feature do
     expect(page).to have_content("Product: stash Earned: $42.8")
 
     expect("Earned: $117255.0").to appear_before("Earned: $42.8")
+
+    within("#top-5") do
+      click_link("elephant")
+    end
+
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/items/#{item11.id}")
   end
 
 

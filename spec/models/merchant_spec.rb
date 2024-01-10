@@ -14,7 +14,7 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe "associations" do
-    it "#enums" do 
+    it "#enums" do
       merchant = Merchant.create!(name: "Test Merchant", status: "enabled")
       merchant2 = Merchant.create!(name: "Test Merchant2", status: "disabled")
       item = merchant.items.create!(name: "popcan", description: "fun", unit_price: 100)
@@ -45,7 +45,7 @@ RSpec.describe Merchant, type: :model do
       transaction3 = invoice3.transactions.create!(credit_card_number: 1238634646123476, credit_card_expiration_date: "04/26", result: 0)
       transaction4 = invoice4.transactions.create!(credit_card_number: 1238567876567476, credit_card_expiration_date: "04/26", result: 0)
       transaction5 = invoice5.transactions.create!(credit_card_number: 1238553460128476, credit_card_expiration_date: "04/26", result: 0)
-      
+
       expect(merchant.enabled?).to be true
       expect(merchant2.disabled?).to be true
     end
@@ -170,7 +170,7 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
-  it "has a #top_earning_items method" do
+  it "has a #top_earning_items method" do #presentation
     merchant_1 = Merchant.create!(name: "Walmart")
     item1 = merchant_1.items.create!(name: "popcan", description: "fun", unit_price: 100)
     item2 = merchant_1.items.create!(name: "popper", description: "fun", unit_price: 156)

@@ -5,6 +5,8 @@
 
 ================================================================
 
+<section id="top-5">
+  
 <h1>Top 5 Money-Makers:</h1>
   <ul>
     <% @top_earning_items.each do |item| %>
@@ -12,7 +14,8 @@
       <p>Top Selling Date for <%= item.name %> was <%= item.top_sales_date %> </p>
     <% end %>
   </ul>
-  
+</section>
+
 <section id="enabled-items">
 
 ================================================================
