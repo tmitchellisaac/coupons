@@ -51,8 +51,23 @@ RSpec.describe "Merchants/Items Index Page", type: :feature do
     end
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/items")
+    expect(merchant_1.items.last.status).to eq("disabled")
     within "#item-#{merchant_1.items.last.id}" do
       expect(page).to have_content("disabled")
+    end
+
+    within "#item-#{merchant_1.items.last.id}" do
+      expect(page).to have_content("disabled")
+      expect(page).to have_button("enable")
+      expect(page).to have_button("disable")
+
+      click_button "enable"
+    end
+
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/items")
+    expect(merchant_1.items.last.status).to eq("enabled")
+    within "#item-#{merchant_1.items.last.id}" do
+      expect(page).to have_content("enabled")
     end
   end
 
