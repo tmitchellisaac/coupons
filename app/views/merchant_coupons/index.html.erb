@@ -1,0 +1,8 @@
+<h1> <%= @merchant.name %>'s Coupons </h1>
+
+<p>
+<% @coupons.each do |coupon| %>
+  Coupon: <%= link_to coupon.name, "/merchants/#{@merchant.id}/coupons/#{coupon.id}" %> 
+  Amount Off: <%= coupon.amt_off %><%= coupon.dollar_or_percent %>
+<% end %>
+</p>
