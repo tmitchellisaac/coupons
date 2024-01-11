@@ -20,3 +20,6 @@
     Date Created: <%= item.created_at.strftime("%A, %B %d, %Y") %>
   <% end %>
 </ul></p>
+
+
+<h2> <%= link_to "Coupons", "/merchants/#{@merchant.id}/coupons" %> </h2>
