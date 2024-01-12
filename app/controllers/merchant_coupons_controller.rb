@@ -16,9 +16,16 @@ class MerchantCouponsController < ApplicationController
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-    coupon = merchant.coupons.create(strong_params)
+    coupon = merchant.coupons.new(strong_params)
     
-    redirect_to "/merchants/#{merchant.id}/coupons"
+      if coupon.save
+        redirect_to "/merchants/#{merchant.id}/coupons"
+        flash[:alert] = "Coupon created successfully"
+      else
+        flash[:alert] = "Not enough information to create, try again"
+        redirect_to "/merchants/#{merchant.id}/coupons/new"
+      end
+      
   end
 
 
