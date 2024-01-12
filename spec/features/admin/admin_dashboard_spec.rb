@@ -106,8 +106,6 @@ RSpec.describe "admin dashboard" do
 
       visit admin_root_path
 
-      
-
       expect(page).to have_content("Invoice#-#{@ii_15.invoice_id}")
       expect(page).to_not have_content(@ii_2.invoice_id)
 
@@ -116,17 +114,12 @@ RSpec.describe "admin dashboard" do
       click_link @ii_15.invoice_id
 
       expect(current_path).to eq(admin_invoice_path(@ii_15.invoice))
-
-    
-
-
     end
 
     it "list the date in order" do 
       visit admin_root_path
 
       expect("Invoice#-#{@ii_19.invoice_id}").to appear_before("Invoice#-#{@ii_15.invoice_id}")
-
     end
   end
 end
