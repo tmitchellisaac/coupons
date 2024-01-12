@@ -1,0 +1,18 @@
+<h1> New Coupon Creation Page </h1>
+
+<%= form_with url: "/merchants/#{@merchant.id}/coupons", local: true do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :uniq_code %>
+  <%= f.text_field :uniq_code %>
+
+  <%= f.label :amt_off %>
+  <%= f.number_field :amt_off %>
+
+  <%= f.label :dollar_or_percent %>
+  <%= f.number_field :dollar_or_percent %>
+
+  <%= f.submit "Create New Coupon" %>
+<% end %>

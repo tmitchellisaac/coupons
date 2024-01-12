@@ -11,6 +11,8 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
+    it { should have_many :coupons}
+
   end
 
   describe "associations" do
@@ -103,8 +105,8 @@ RSpec.describe Merchant, type: :model do
       transaction3 = invoice3.transactions.create!(credit_card_number: 1238634646123476, credit_card_expiration_date: "04/26", result: 0)
       transaction4 = invoice4.transactions.create!(credit_card_number: 1238567876567476, credit_card_expiration_date: "04/26", result: 0)
       transaction5 = invoice5.transactions.create!(credit_card_number: 1238553460128476, credit_card_expiration_date: "04/26", result: 0)
-
-      expect(merchant.top_customers).to include(customer1, customer2, customer3, customer4, customer5)
+      a = merchant.top_customers
+      expect(a).to include(customer1, customer2, customer3, customer4, customer5)
       expect(merchant.top_customers).to_not include(customer6)
     end
 

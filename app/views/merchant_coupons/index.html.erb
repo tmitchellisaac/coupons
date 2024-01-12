@@ -1,8 +1,10 @@
 <h1> <%= @merchant.name %>'s Coupons </h1>
-
+<p> Create New Coupon: <%= link_to "New Coupon", "/merchants/#{@merchant.id}/coupons/new" %>
 <p>
 <% @coupons.each do |coupon| %>
   Coupon: <%= link_to coupon.name, "/merchants/#{@merchant.id}/coupons/#{coupon.id}" %> 
   Amount Off: <%= coupon.amt_off %><%= coupon.dollar_or_percent %>
+  Coupon Code: <%= coupon.uniq_code %>
 <% end %>
 </p>
+

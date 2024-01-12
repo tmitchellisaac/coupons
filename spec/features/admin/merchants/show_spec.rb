@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Admin merchant show', type: :feature do
   describe '' do
     before(:each) do
-      @merch_1 = Merchant.create!(name: "Walmart", status: :enabled)
+      @merch_1 = Merchant.create!(name: "TJ MAX", status: :enabled)
       @merch_2 = Merchant.create!(name: "Target", status: :enabled)
 
       @item_1 = @merch_1.items.create!(name: "Apple", description: "red apple", unit_price:1)
@@ -65,7 +65,7 @@ RSpec.describe 'Admin merchant show', type: :feature do
       # Then I am taken to that merchant's admin show page (/admin/merchants/:merchant_id)
       expect(current_path).to eq(admin_merchant_path(@merch_1))
       # And I see the name of that merchant
-      expect(page).to have_content("Merchant: Walmart")
+      expect(page).to have_content("Merchant: TJ MAX")
     end
 
     # 26. Admin Merchant Update
