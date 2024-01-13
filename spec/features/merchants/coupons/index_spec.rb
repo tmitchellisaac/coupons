@@ -58,7 +58,6 @@ describe "Coupons" do
       expect(page).to have_content("4_dollars_off")
       expect(page).to have_content("1_dollars_off")
     end
-    save_and_open_page
   end
 
 end
