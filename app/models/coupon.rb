@@ -36,6 +36,15 @@ class Coupon < ApplicationRecord
     Invoice.where("#{id} = invoices.coupon_id").where(status: 1).empty?
   end
 
+  # put these in the merchant model instead
+  
+  # def active_coupons
+  #   self.coupons.where({coupons: {status: 1}})
+  # end
+
+  # def inactive_coupons
+  #   self.coupons.where({coupons: {status: 0}})
+  # end
 
   private
 

@@ -73,4 +73,12 @@ class Merchant < ApplicationRecord
       .where("items.merchant_id = #{self.id}")
       .sum("quantity * invoice_items.unit_price")
   end
+
+  def active_coupons
+    self.coupons.where({coupons: {status: 1}})
+  end
+  
+  def inactive_coupons
+    self.coupons.where({coupons: {status: 0}})
+  end
 end

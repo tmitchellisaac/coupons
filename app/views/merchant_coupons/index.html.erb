@@ -1,10 +1,25 @@
 <h1> <%= @merchant.name %>'s Coupons </h1>
 <p> Create New Coupon: <%= link_to "New Coupon", "/merchants/#{@merchant.id}/coupons/new" %>
-<p>
-<% @coupons.each do |coupon| %>
-  Coupon: <%= link_to coupon.name, "/merchants/#{@merchant.id}/coupons/#{coupon.id}" %> 
-  Amount Off: <%= coupon.amt_off %><%= coupon.dollar_or_percent %>
-  Coupon Code: <%= coupon.uniq_code %>
-<% end %>
-</p>
+<br>
+===============================================================
+<h2> Active Coupons </h2>
+<section id="active">
+  <% @active_coupons.each do |coupon| %>
+---------------------------------------------------
+   <p> Coupon: <%= link_to coupon.name, "/merchants/#{@merchant.id}/coupons/#{coupon.id}" %> </p>
+   <p> Amount Off: <%= coupon.amt_off %><%= coupon.dollar_or_percent %> </p>
+   <p> Coupon Code: <%= coupon.uniq_code %> </p>
+  <% end %>
+</section>
+<br>
+===============================================================
+<h2> Inactive Coupons </h2>
+<section id="inactive">
+  <% @inactive_coupons.each do |coupon| %>
+  ---------------------------------------------------
+   <p> Coupon: <%= link_to coupon.name, "/merchants/#{@merchant.id}/coupons/#{coupon.id}" %> </p>
+   <p> Amount Off: <%= coupon.amt_off %><%= coupon.dollar_or_percent %> </p>
+   <p> Coupon Code: <%= coupon.uniq_code %> </p>
+  <% end %>
+</section>
 
