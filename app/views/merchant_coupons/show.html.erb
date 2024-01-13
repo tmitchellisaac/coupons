@@ -1,2 +1,10 @@
 <h1> <%= @coupon.name %> for use with <%= @merchant.name %> </h1>
 
+<p> Code: <%= @coupon.uniq_code %>, Amount Off: <%= @coupon.amt_off %><%= @coupon.dollar_or_percent %> </p>
+
+<p> Status: <%= @coupon.status %> </p>
+
+<section id="usage">
+ Usage: <%= @count %>%
+</section>
+
