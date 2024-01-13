@@ -8,6 +8,7 @@ class MerchantCouponsController < ApplicationController
   def show
     @merchant = Merchant.find(params[:merchant_id])
     @coupon = Coupon.find(params[:id])
+    @count = @coupon.usage
   end
 
   def new
@@ -25,7 +26,7 @@ class MerchantCouponsController < ApplicationController
         flash[:alert] = "Not enough information to create, try again"
         redirect_to "/merchants/#{merchant.id}/coupons/new"
       end
-      
+
   end
 
 
