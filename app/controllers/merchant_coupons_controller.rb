@@ -29,6 +29,17 @@ class MerchantCouponsController < ApplicationController
 
   end
 
+  def update
+    merchant = Merchant.find(params[:merchant_id])
+    coupon = Coupon.find(params[:id])
+      if coupon.pending_invoice?
+        coupon.update(strong_params)
+      else
+        flash[:alert] = "Cannot disable coupon due to pending invoice"
+      end
+    redirect_to "/merchants/#{merchant.id}/coupons/#{coupon.id}"
+  end
+
 
 
   private
