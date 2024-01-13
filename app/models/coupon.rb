@@ -32,6 +32,9 @@ class Coupon < ApplicationRecord
     .count
   end
 
+  def pending_invoice?
+    Invoice.where("#{id} = invoices.coupon_id").where(status: 1).empty?
+  end
 
 
   private
