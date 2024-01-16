@@ -12,7 +12,7 @@ class Coupon < ApplicationRecord
 
  
   validate :limit_inactive_coupons, on: :create
-
+  enum dollar_or_percent: {dollars: 0, percent: 1}
   enum status: {inactive: 0, active: 1}
 
   # def usage
@@ -34,6 +34,14 @@ class Coupon < ApplicationRecord
 
   def pending_invoice?
     Invoice.where("#{id} = invoices.coupon_id").where(status: 1).empty?
+  end
+
+  def converter
+    if self.dollar_or_percent == "percent"
+      "%"
+    elsif self.dollar_or_percent == "dollars"
+      "$"
+    end
   end
 
   # put these in the merchant model instead

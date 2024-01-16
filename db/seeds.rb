@@ -13,10 +13,10 @@ Transaction.destroy_all
 InvoiceItem.destroy_all
 
 merchant_1 = Merchant.create!(name: "Walmart", status: :enabled)
-coupon_1 = merchant_1.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 15, dollar_or_percent: "%", status: 1)
-coupon_2 = merchant_1.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 5, dollar_or_percent: "$", status: 1)
-coupon_3 = merchant_1.coupons.create!(name: "10_dollars_off", uniq_code: "qaz", amt_off: 10, dollar_or_percent: "$", status: 1)
-coupon_4 = merchant_1.coupons.create!(name: "4_dollars_off", uniq_code: "wsx", amt_off: 4, dollar_or_percent: "$", status: 1)
+coupon_1 = merchant_1.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 15, dollar_or_percent: "percent", status: 1)
+coupon_2 = merchant_1.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 5, dollar_or_percent: "dollars", status: 1)
+coupon_3 = merchant_1.coupons.create!(name: "10_dollars_off", uniq_code: "qaz", amt_off: 10, dollar_or_percent: "dollars", status: 1)
+coupon_4 = merchant_1.coupons.create!(name: "4_dollars_off", uniq_code: "wsx", amt_off: 4, dollar_or_percent: "dollars", status: 1)
 
 item1 = merchant_1.items.create!(name: "popcan", description: "fun", unit_price: 100)
 item2 = merchant_1.items.create!(name: "popper", description: "fun", unit_price: 156)

@@ -74,6 +74,25 @@ class Merchant < ApplicationRecord
       .sum("quantity * invoice_items.unit_price")
   end
 
+  def grand_total(invoice)
+    if dollar_coupon(invoice)
+      total_invoice_revenue(invoice) - dollar_coupon(invoice).to_i
+    elsif percent_coupon(invoice)
+      total_invoice_revenue(invoice) * (1 - (percent_coupon(invoice).to_f/100))
+    else
+      "error"
+    end
+  end
+
+  def dollar_coupon(invoice)
+    Coupon.joins(:invoices).where("coupons.dollar_or_percent = ?", 0).where("invoices.id = #{invoice.id}").pluck(:amt_off).first
+  end
+
+  def percent_coupon(invoice)
+    Coupon.joins(:invoices).where("coupons.dollar_or_percent = ?", 1).where("invoices.id = #{invoice.id}").pluck(:amt_off).first
+
+  end
+
   def active_coupons
     self.coupons.where({coupons: {status: 1}})
   end

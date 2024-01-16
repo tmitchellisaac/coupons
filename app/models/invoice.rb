@@ -24,4 +24,13 @@ class Invoice < ApplicationRecord
       .sum("invoice_items.quantity * invoice_items.unit_price")
   end
 
+  def grand_total
+    total_revenue 
+  end
+
+
+  def coupon_code
+    Invoice.joins(:coupon).where("invoices.id = #{id}").pluck(:uniq_code).first
+  end
+
 end

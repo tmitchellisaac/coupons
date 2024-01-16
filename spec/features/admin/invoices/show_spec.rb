@@ -130,5 +130,52 @@ RSpec.describe 'Admin Show Spec', type: :feature do
 
       expect(page).to have_content(@inv_1.total_revenue)
     end
+
+
+    it "has a something method idk fill it in later" do
+      merchant_11 = Merchant.create!(name: "Walmart", status: :enabled)
+      merchant_22 = Merchant.create!(name: "Temu")
+      
+      coupon_11 = merchant_11.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 25, dollar_or_percent: "percent", status: 1)
+      coupon_22 = merchant_11.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 500, dollar_or_percent: "dollars", status: 1)
+      
+      item11 = merchant_11.items.create!(name: "popcan", description: "fun", unit_price: 600)
+      item22 = merchant_11.items.create!(name: "popper", description: "fun", unit_price: 200)
+      item33 = merchant_22.items.create!(name: "copper", description: "money", unit_price: 300)
+      
+      customer11 = Customer.create!(first_name: "John", last_name: "Smith")
+      customer22 = Customer.create!(first_name: "Jane", last_name: "Sornes")
+      
+      invoice11 = Invoice.create!(customer_id: customer11.id, coupon_id: coupon_11.id, status: 2)
+      invoice22 = customer22.invoices.create!(status: 2)
+      
+      invoice_item11 = invoice11.invoice_items.create!(item_id: item11.id, quantity: 1, unit_price: 600, status: 2)
+      invoice_item22 = invoice11.invoice_items.create!(item_id: item22.id, quantity: 1, unit_price: 600, status: 2)
+      invoice_item33 = invoice11.invoice_items.create!(item_id: item33.id, quantity: 1, unit_price: 300, status: 2)
+      
+      # 8. Admin Invoice Show Page: Subtotal and Grand Total Revenues
+
+      # As an admin
+      # When I visit one of my admin invoice show pages
+      # I see the name and code of the coupon that was used (if there was a coupon applied)
+      # And I see both the subtotal revenue from that invoice (before coupon) and 
+      # the grand total revenue (after coupon) for this invoice.
+
+      # * Alternate Paths to consider: 
+      # 1. There may be invoices with items from more than 1 merchant. 
+      # Coupons for a merchant only apply to items from that merchant.
+      # 2. When a coupon with a dollar-off value is used with an invoice with 
+      # multiple merchants' items, the dollar-off amount applies to the total amount even 
+      # though there may be items present from another merchant.
+         
+      visit admin_invoice_path(invoice11)
+      expect(page).to have_content(1500)
+      expect(page).to have_content("x95l")
+
+      save_and_open_page
+      expect(page).to have_content(true)
+
+    end
+
   end
 end

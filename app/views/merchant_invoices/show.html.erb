@@ -26,5 +26,7 @@
   <% end %>
 </h2>
 
-<h3><%= "Total Expected Revenue: $#{@merchant.total_invoice_revenue(@invoice).to_f / 100}" %></h3>
+<h3><%= "Total Expected Revenue: #{number_to_currency(@merchant.total_invoice_revenue(@invoice).to_f / 100)}" %></h3>
+
+<h3><%= "Grand Total: #{number_to_currency(@merchant.grand_total(@invoice).to_f/100)}" %></h3>
 

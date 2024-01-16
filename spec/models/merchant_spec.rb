@@ -283,4 +283,62 @@ RSpec.describe Merchant, type: :model do
 
     expect(merchant_1.total_invoice_revenue(invoice1)).to eq(365)
   end
+
+  it "has a dollar_or_percent converter method" do 
+    merchant_1 = Merchant.create!(name: "Walmart", status: :enabled)
+    coupon_1 = merchant_1.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 25, dollar_or_percent: "percent", status: 1)
+    coupon_2 = merchant_1.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 500, dollar_or_percent: "dollars", status: 1)
+    
+    expect(coupon_1.converter).to eq("%")
+    expect(coupon_2.converter).to eq("$")
+  end
+
+  it "has a total dollar off calculator for invoices with coupons" do
+    merchant_1 = Merchant.create!(name: "Walmart", status: :enabled)
+    merchant_2 = Merchant.create!(name: "Temu")
+    
+    coupon_1 = merchant_1.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 25, dollar_or_percent: "percent", status: 1)
+    coupon_2 = merchant_1.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 500, dollar_or_percent: "dollars", status: 1)
+    
+    item1 = merchant_1.items.create!(name: "popcan", description: "fun", unit_price: 600)
+    item2 = merchant_1.items.create!(name: "popper", description: "fun", unit_price: 200)
+    item3 = merchant_2.items.create!(name: "copper", description: "money", unit_price: 300)
+    
+    customer1 = Customer.create!(first_name: "John", last_name: "Smith")
+    customer2 = Customer.create!(first_name: "Jane", last_name: "Sornes")
+    
+    invoice1 = Invoice.create!(customer_id: customer1.id, coupon_id: coupon_2.id, status: 2)
+    invoice2 = customer2.invoices.create!(status: 2)
+    
+    invoice_item1 = invoice1.invoice_items.create!(item_id: item1.id, quantity: 1, unit_price: 600, status: 2)
+    invoice_item2 = invoice1.invoice_items.create!(item_id: item2.id, quantity: 1, unit_price: 500, status: 2)
+    
+
+    expect(merchant_1.dollar_coupon(invoice1)).to eq(500)
+    expect(merchant_1.grand_total(invoice1)).to eq(600)
+  end
+
+  it "has a total percent off calculator for invoices with coupons" do
+    merchant_1 = Merchant.create!(name: "Walmart", status: :enabled)
+    merchant_2 = Merchant.create!(name: "Temu")
+    
+    coupon_1 = merchant_1.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 25, dollar_or_percent: "percent", status: 1)
+    coupon_2 = merchant_1.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 500, dollar_or_percent: "dollars", status: 1)
+    
+    item1 = merchant_1.items.create!(name: "popcan", description: "fun", unit_price: 600)
+    item2 = merchant_1.items.create!(name: "popper", description: "fun", unit_price: 200)
+    item3 = merchant_2.items.create!(name: "copper", description: "money", unit_price: 300)
+    
+    customer1 = Customer.create!(first_name: "John", last_name: "Smith")
+    customer2 = Customer.create!(first_name: "Jane", last_name: "Sornes")
+    
+    invoice1 = Invoice.create!(customer_id: customer1.id, coupon_id: coupon_1.id, status: 2)
+    invoice2 = customer2.invoices.create!(status: 2)
+    
+    invoice_item1 = invoice1.invoice_items.create!(item_id: item1.id, quantity: 1, unit_price: 600, status: 2)
+    invoice_item2 = invoice1.invoice_items.create!(item_id: item2.id, quantity: 1, unit_price: 600, status: 2)
+    
+    expect(merchant_1.percent_coupon(invoice1)).to eq(25)
+    expect(merchant_1.grand_total(invoice1)).to eq(900)
+  end
 end
