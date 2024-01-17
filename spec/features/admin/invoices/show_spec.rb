@@ -131,7 +131,7 @@ RSpec.describe 'Admin Show Spec', type: :feature do
     end
 
 
-    it "has a something method idk fill it in later" do
+    it "has a grand total method factoring in coupons with relevant merchant" do
       merchant_11 = Merchant.create!(name: "Walmart", status: :enabled)
       merchant_22 = Merchant.create!(name: "Temu")
       
