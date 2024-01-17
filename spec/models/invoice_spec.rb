@@ -50,4 +50,29 @@ RSpec.describe Invoice, type: :model do
       expect(Invoice.best_day.created_at.strftime("%m/%d/%y")).to eq("02/02/18")
     end
   end
+
+  it "has a #total_revenue AND a #grand_total method" do
+    merchant_11 = Merchant.create!(name: "Walmart", status: :enabled)
+    merchant_22 = Merchant.create!(name: "Temu")
+    
+    coupon_11 = merchant_11.coupons.create!(name: "15% off", uniq_code: "x95l", amt_off: 25, dollar_or_percent: "percent", status: 1)
+    coupon_22 = merchant_11.coupons.create!(name: "5_dollars_off", uniq_code: "ikm", amt_off: 500, dollar_or_percent: "dollars", status: 1)
+    
+    item11 = merchant_11.items.create!(name: "popcan", description: "fun", unit_price: 200)
+    item22 = merchant_11.items.create!(name: "popper", description: "fun", unit_price: 200)
+    item33 = merchant_22.items.create!(name: "copper", description: "money", unit_price: 300)
+    
+    customer11 = Customer.create!(first_name: "John", last_name: "Smith")
+    customer22 = Customer.create!(first_name: "Jane", last_name: "Sornes")
+    
+    invoice11 = Invoice.create!(customer_id: customer11.id, coupon_id: coupon_22.id, status: 2)
+    invoice22 = customer22.invoices.create!(status: 2)
+    
+    invoice_item11 = invoice11.invoice_items.create!(item_id: item11.id, quantity: 1, unit_price: 200, status: 2)
+    invoice_item22 = invoice11.invoice_items.create!(item_id: item22.id, quantity: 1, unit_price: 200, status: 2)
+    invoice_item33 = invoice11.invoice_items.create!(item_id: item33.id, quantity: 1, unit_price: 300, status: 2)
+    
+    expect(invoice11.total_revenue).to eq(700)
+    expect(invoice11.grand_total).to eq(300)
+  end
 end
