@@ -88,6 +88,19 @@ class Merchant < ApplicationRecord
     Coupon.joins(:invoices).where("coupons.dollar_or_percent = ?", 0).where("invoices.id = #{invoice.id}").pluck(:amt_off).first
   end
 
+
+
+  # def total_from_merchant(merchant)
+  #   InvoiceItems.find_by_sql ["
+  #   SELECT sum(invoice_items.quantity * invoice_items.unit_price)
+  #   FROM items
+  #   JOIN invoice_items ON items.id = invoice_items.item_id
+  #   WHERE items.merchant_id = #{merchant.id} AND
+  #   invoice_items.invoice_id = #{id}
+  #   "]
+
+  # end
+
   def percent_coupon(invoice)
     Coupon.joins(:invoices).where("coupons.dollar_or_percent = ?", 1).where("invoices.id = #{invoice.id}").pluck(:amt_off).first
 
