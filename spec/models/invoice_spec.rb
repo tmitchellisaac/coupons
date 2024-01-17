@@ -51,7 +51,7 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
-  it "has a #total_revenue AND a #grand_total method" do
+  it "has a #total_revenue AND a #grand total method" do
     merchant_11 = Merchant.create!(name: "Walmart", status: :enabled)
     merchant_22 = Merchant.create!(name: "Temu")
     
