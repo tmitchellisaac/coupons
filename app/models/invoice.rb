@@ -26,21 +26,25 @@ class Invoice < ApplicationRecord
 
 
   def grand_total
-    merch_id = self.coupon.merchant.id
-    total = (InvoiceItem.find_by_sql ["
-    SELECT sum(invoice_items.quantity * invoice_items.unit_price)
-    FROM items
-    JOIN invoice_items ON items.id = invoice_items.item_id
-    WHERE items.merchant_id = #{merch_id} AND
-    invoice_items.invoice_id = #{id}
-    "]).first.sum
-    amt_off = dollar_coupon_invoice
-    if total - amt_off <= 0
-      final_discount = total 
-    elsif total - amt_off > 0
-      final_discount = amt_off
+    if self.coupon
+      merch_id = self.coupon.merchant.id
+      total = (InvoiceItem.find_by_sql ["
+      SELECT sum(invoice_items.quantity * invoice_items.unit_price)
+      FROM items
+      JOIN invoice_items ON items.id = invoice_items.item_id
+      WHERE items.merchant_id = #{merch_id} AND
+      invoice_items.invoice_id = #{id}
+      "]).first.sum
+      amt_off = dollar_coupon_invoice
+      if total - amt_off <= 0
+        final_discount = total 
+      elsif total - amt_off > 0
+        final_discount = amt_off
+      end
+      total_revenue - final_discount
+    else
+      total_revenue
     end
-    total_revenue - final_discount
   end
 
   def dollar_coupon_invoice
