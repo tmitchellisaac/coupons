@@ -1,11 +1,11 @@
-<h1><%=@invoice.id%></h1>
-<p><%=@invoice.status%></p>
-<p><%=@invoice.created_at.strftime("%A, %B %d, %Y")%></p>
-<p><%=@invoice.customer.first_name%> <%=@invoice.customer.last_name  %></p>
+<h1> ID: <%=@invoice.id%></h1>
+<p> Invoice Status: <%=@invoice.status%></p>
+<p> Created Date: <%=@invoice.created_at.strftime("%A, %B %d, %Y")%></p>
+<p> Customer Name: <%=@invoice.customer.first_name%> <%=@invoice.customer.last_name  %></p>
 
-
+<h2> Current Status </h2>
 <section class = "status-update">
-  <p>Current Status: <%=@invoice.status %></p>
+  <p> Current Status: <%=@invoice.status %></p>
   <%= form_with url: admin_invoice_path(@invoice) , method: :patch , local: true do |f| %>
     <%=f.label :status%>
     <%=f.select :status, ["in progress", "completed", "cancelled"]%>
@@ -13,16 +13,17 @@
   <% end %>
 </section>
 
+<h2> Items: </h2>
 <% @invoice.items.each do |item| %>
   <section id="item-details-<%= item.id %>">
-    <p><%= item.name %></p>
-    <p><%= item.quantity_ordered(item.id, @invoice.id) %></p>
-    <p><%= item.unit_price %></p>
-    <p><%= item.invoice_status(item.id, @invoice.id) %></p>
+    <p> Name: <%= item.name %></p>
+    <p> Quantity ordered: <%= item.quantity_ordered(item.id, @invoice.id) %></p>
+    <p> Unit Price: <%= item.unit_price %></p>
+    <p> Invoice Status: <%= item.invoice_status(item.id, @invoice.id) %></p>
   </section>
 <% end %>
 
 
-<h2>Total Revenue: <%= @invoice.total_revenue%></h2>
+<h2> Total Revenue: <%= number_to_currency(@invoice.total_revenue/100)%></h2>
 <h3> Coupon Code: <%= @invoice.coupon_code %>
-<h2>Grand Total Revenue: <%= @invoice.grand_total%></h2>
+<h2> Grand Total Revenue: <%= number_to_currency(@invoice.grand_total/100)%></h2>
